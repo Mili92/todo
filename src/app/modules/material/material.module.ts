@@ -9,12 +9,31 @@ import {
   MatSortModule,
   MatIconModule,
   MatButtonModule,
+  MatToolbarModule,
 } from '@angular/material';
+
+
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
   ],
-  declarations: []
+  declarations: [],
+  exports:[
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+  ]
 })
 export class MaterialModule { }

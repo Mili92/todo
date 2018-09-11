@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TodoService } from './../../shared/services/todo.service';
 import { TodoInterface } from '../../shared/interfaces/todo-interface';
+
+//Importation des classes nécessaires: les composants Material
+import { MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 
 @Component({
   selector: 'todos-table',
@@ -9,6 +12,7 @@ import { TodoInterface } from '../../shared/interfaces/todo-interface';
   styleUrls: ['./todos-table.component.css']
 })
 export class TodosTableComponent implements OnInit {
+  @ViewChild(MatSort) sort: MatSort;
 
     /**
    * @var aTodo
@@ -20,6 +24,22 @@ export class TodosTableComponent implements OnInit {
    * abonnement à un todo qui vient de TodoService
    */
   private todoSubscription: Subscription;
+
+  /**
+   * Datasource: Source des données pour le tableau Material
+   */
+  public dataSource = new MatTableDataSource<TodoInterface>();
+  
+  /**
+   * Colonnes utilisées dans mat-table
+   */
+  public displayedColumns = [
+    'title',
+    'begin',
+    'end',
+    'update',
+    'delete'
+  ];
 
   /**
    * Tableau de todos à afficher
@@ -43,6 +63,7 @@ export class TodosTableComponent implements OnInit {
                                               } else {
                                                 this.todos[index]=todo;
                                               }
+                                              this.dataSource.data = this.todos;
                                             });
   }
   /**
@@ -64,6 +85,11 @@ export class TodosTableComponent implements OnInit {
     this.todoService.getTodos().subscribe((todos) =>{
       this.todos= todos;
       console.log('Il y a '+ this.todos.length + ' todos à afficher');
+
+      //On définit à ce moment a source de données
+      this.dataSource.data = this.todos;
+      this.dataSource.sort = this.sort;
+
     });
   }
 
@@ -71,10 +97,13 @@ export class TodosTableComponent implements OnInit {
    * Supprime un todo de la liste
    */
 
-   public delete(index: number): void {
+   public delete(todo: TodoInterface): void {
+    const index = this.todos.indexOf(todo);
     const _todo = this.todos[index];//Récupère le todo
 
     this.todos.splice(index,1);//Depile l'élément du tableau
+
+    this.dataSource.data = this.todos;
 
     this.todoService.deleteTodo(_todo);//Appelle le service
    }
@@ -143,6 +172,9 @@ public checkUncheckAll(){
   this.checkedStatus = !this.checkedStatus;
   this._check();
 }
+
+
+
 
 
 }
