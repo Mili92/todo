@@ -8,7 +8,7 @@ import { indexDebugNode } from '../../node_modules/@angular/core/src/debug/debug
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public title: String = 'Hello Angular';
+  public title: String = 'Angular Todo List';
 
   /**
    * @var todos: TodoInterface[]
@@ -28,8 +28,8 @@ export class AppComponent {
    */
   public constructor(){
     this.todos=[];
-      //{title: 'Todo1', isChecked: false},
-     // {title: 'Todo2', isChecked: false}
+     // {title: 'Todo1'}//, isChecked: false},
+    // {title: 'Todo2'}//, isChecked: false}
     //];
     this.aTodo='';
   }
@@ -39,7 +39,7 @@ export class AppComponent {
    * @return void
    */
   public addTodo(): void {
-    this.todos.push({title: this.aTodo, isChecked:false});
+   // this.todos.push({title: this.aTodo, isChecked:false});
     this.aTodo='';
   }
 
@@ -119,8 +119,6 @@ public checkUncheckAll(){
   this.checkedStatus = !this.checkedStatus;
   this._check();
 }
-
-
 
 }
 

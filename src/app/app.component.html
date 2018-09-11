@@ -1,66 +1,30 @@
+<app-layout>
+<!--Integration du composant todo-form-->
+<todo-form></todo-form>
+
+
+<!--Intégration du composant todos-table-->
+<todos-table></todos-table>
+
+  
+</app-layout>
+
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    {{ title }}
-  </h1>
-  <button
-      type='button'
-      (click)="changeTitle()"
-  >
-  Click here!
-  </button>  
+<!--
+<div class="container-fluid">
+  <div style="text-align:center">
+    <h1>
+      {{ title }}
+    </h1>
+    <!--<button
+        type='button'
+        (click)="changeTitle()"
+    >
+    Click here!
+    </button>  -->
+    <!--
+  </div>
 </div>
-<div>
-  <input type="text" placeholder="To do..."[(ngModel)]="aTodo">
-  <button type="button"
-          (click)="addTodo()"
-          [disabled]="validityCheck()"
-  >
-  Add
-</button>
-<div>
-  <button 
-    type="button"
-    [disabled]="noneChecked()"
-    (click)="deleteChecked2()"
-  >
-    Delete selected
-  </button>
-</div>
-
-  <table [hidden]="todos.length ==0">
-      <thead>
-        <tr>
-          <th><input type="checkbox" (click)="checkUncheckAll()">Select all</th>
-          <th>Title</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let todo of todos; let i = index;">
-          
-          <td>
-            <input type="checkbox" 
-                  name="check" 
-                  id="check" 
-                  (click)="toggle(i)" 
-                  [checked]=todo.isChecked>
-          </td>
-
-          <td [ngClass]="{strikeOut: isChecked(todo)}">{{ todo.title }}</td>
-          
-          <td>
-            <button 
-              type="button"
-              (click)="delete(i)"
-            >
-            Delete task (X)
-            </button>
-          </td>
-
-        </tr>
-      </tbody>
-  </table>
-</div>
-
+<br>
+-->
 

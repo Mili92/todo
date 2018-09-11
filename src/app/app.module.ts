@@ -1,18 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { TodoFormComponent } from './components/todo-form/todo-form.component';
+import { TodosTableComponent } from './components/todos-table/todos-table.component';
 
+import {TodoService} from './shared/services/todo.service';
+import { UiModule } from './modules/ui/ui.module';
+import { MaterialModule } from './modules/material/material.module';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TodoFormComponent,
+    TodosTableComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    UiModule,
+    MaterialModule
   ],
-  providers: [],
+  providers: [
+    TodoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

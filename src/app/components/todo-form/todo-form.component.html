@@ -1,0 +1,44 @@
+<form 
+  id="todo-form"
+  class="col-6 block-center"
+  [formGroup]="todoForm"
+  (submit)=saveTodo()
+  >
+  <div>
+    <div class="form-group">
+      <input class = "form-control" type="text" placeholder="To do..." formControlName="title">
+        <div 
+            class="alert alert-warning"
+            *ngIf="title.invalid && title.touched">
+        
+        <i class="fa fa-info" style="color:red"></i> Task title cannot be empty <br>
+        and must contain at least 5 characters.
+        </div>
+    </div>
+
+
+    <div class="form-group">
+    Start Date <i class="fa fa-calendar"></i> :
+    <input class = "form-control" type="date" name="startdate" id="startdate"formControlName="begin">
+    </div>
+
+    <div class="form-group">
+    End Date <i class="fa fa-calendar"></i> :
+    <input class = "form-control" type="date" name="enddate" id="enddate"formControlName="end">
+        <div
+        class="alert alert-warning"
+        *ngIf="todoForm.hasError('begin')"
+        >
+        <i class="fa fa-info" style="color:red"></i> The end date must be superior than or equal to the start date.
+        </div>
+    </div>
+
+    
+    <div class="form-group">
+    <button type="submit" [disabled]="todoForm.invalid">
+      Add  
+    </button>
+    </div>
+  </div>
+
+</form>
