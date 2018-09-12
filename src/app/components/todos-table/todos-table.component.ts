@@ -47,10 +47,10 @@ export class TodosTableComponent implements OnInit {
   /**
    * Colonnes à afficher dans le mat-select
    */
-  public availableColumns: String[] = [
-    'begin',
-    'end'
-  ]
+  public availableColumns: any[] = [
+    {value: 'begin',label: 'From...'},
+    {value: 'end', label: 'To...'}
+  ];
 
   /**
    * Colonnes sélectionnées par défaut pour que les boites soient cochées
