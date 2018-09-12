@@ -10,6 +10,9 @@ import {
   MatIconModule,
   MatButtonModule,
   MatToolbarModule,
+  MatFormFieldModule,
+  MatOptionModule,
+  MatSelectModule
 } from '@angular/material';
 
 
@@ -24,6 +27,9 @@ import {
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   declarations: [],
   exports:[
@@ -34,6 +40,9 @@ import {
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule { }

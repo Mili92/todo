@@ -4,7 +4,8 @@ import { TodoService } from './../../shared/services/todo.service';
 import { TodoInterface } from '../../shared/interfaces/todo-interface';
 
 //Importation des classes nécessaires: les composants Material
-import { MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatSelect, MatOption} from '@angular/material';
+import { FormGroup, FormControl } from '../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'todos-table',
@@ -30,16 +31,74 @@ export class TodosTableComponent implements OnInit {
    */
   public dataSource = new MatTableDataSource<TodoInterface>();
   
-  /**
+
+   /**
    * Colonnes utilisées dans mat-table
    */
-  public displayedColumns = [
+  public columns = new FormControl();
+  public displayedColumns: String[] = [
     'title',
     'begin',
     'end',
     'update',
     'delete'
   ];
+
+  /**
+   * Colonnes à afficher dans le mat-select
+   */
+  public availableColumns: String[] = [
+    'begin',
+    'end'
+  ]
+
+  /**
+   * Colonnes sélectionnées par défaut pour que les boites soient cochées
+   */
+  public selectedValue: String[] = [
+    'begin',
+    'end'
+  ]
+  /**
+   * Options réellement sélectionnées par l'utilisateur
+   */
+  public selectedOptions: any;
+  
+  /**
+   * Détecte un changement de sélection de colonnes
+   * @param event Evenement
+   */
+  public changeView(event:any): void{
+    console.log(this.selectedOptions + ' de taille : '+ this.selectedOptions.length);
+
+    const toShow: String[] = this.selectedOptions;
+
+    /**
+     * Definit le tableau final pour l'affichage des colonnes
+     */
+    const toDisplay: String[]= [];
+
+    toDisplay.push('title'); //toujours affichée, donc...on le push
+
+    if (toShow.indexOf('begin') !== -1){
+      //begin est coché, on le push
+      toDisplay.push('begin');
+    }
+    if (toShow.indexOf('end') !== -1){
+      //end est coché, on le push
+      toDisplay.push('end');
+    }
+    //On doit toujours avoir les boutons aussi
+    toDisplay.push('update');
+    toDisplay.push('delete');
+    /**
+     * On remplace le tableau des colonnes à afficher dans le tableau
+     */
+    this.displayedColumns =toDisplay;
+
+  }
+  
+  
 
   /**
    * Tableau de todos à afficher
@@ -86,7 +145,7 @@ export class TodosTableComponent implements OnInit {
       this.todos= todos;
       console.log('Il y a '+ this.todos.length + ' todos à afficher');
 
-      //On définit à ce moment a source de données
+      //On définit à ce moment la source de données
       this.dataSource.data = this.todos;
       this.dataSource.sort = this.sort;
 
@@ -172,9 +231,5 @@ public checkUncheckAll(){
   this.checkedStatus = !this.checkedStatus;
   this._check();
 }
-
-
-
-
 
 }

@@ -1,23 +1,36 @@
 <div class="row">
 
   <mat-toolbar color="primary">
-        <span>Tools</span>
-      
-        <!-- This fills the remaining space of the current row -->
-        <span class="move-right">
-            <button 
-            class="btn btn-warning"
-              type="button"
-              [disabled]="noneChecked()"
-              (click)="deleteChecked2()"
-            >
-              Delete selected  <i class="fa fa-paw"></i>
-            </button>
-        </span>    
+    <span>Tools</span>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="move-right"></span>
+
+    <!--Liste déroulante pour afficher masquer les colonnes-->
+    <mat-form-field>
+      <mat-select 
+      placeholder="Afficher" 
+      [(ngModel)]="selectedValue"
+      [(value)] ="selectedOptions"
+      (selectionChange)="changeView($event)" 
+      [formControl]="columns" 
+      multiple
+      >
+        <mat-option *ngFor="let column of availableColumns" [value]="column"> {{column}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span>
+      <button class="btn btn-warning" type="button" [disabled]="noneChecked()" (click)="deleteChecked2()">
+        Delete selected
+        <i class="fa fa-paw"></i>
+      </button>
+    </span>
+
   </mat-toolbar>
 
   <mat-table #todos [dataSource]="dataSource" matSort>
-    
+
     <!-- Titre -->
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef>To do</mat-header-cell>
@@ -26,14 +39,14 @@
 
     <!-- Date de début -->
     <ng-container matColumnDef="begin">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>From...</mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.begin | date: 'dd-MM-yyyy' }} </mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>From...</mat-header-cell>
+      <mat-cell *matCellDef="let todo"> {{ todo.begin | date: 'dd-MM-yyyy' }} </mat-cell>
     </ng-container>
 
     <!-- Date de fin -->
     <ng-container matColumnDef="end">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>To...</mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.end | date: 'dd-MM-yyyy' }} </mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>To...</mat-header-cell>
+      <mat-cell *matCellDef="let todo"> {{ todo.end | date: 'dd-MM-yyyy' }} </mat-cell>
     </ng-container>
 
     <!-- Modification d'un todo -->
@@ -42,7 +55,7 @@
       <mat-cell *matCellDef="let todo">
         <button mat-mini-fab color="accent" (click)="update(todo)">
           <mat-icon aria-label="Modify task">
-            create 
+            create
           </mat-icon>
         </button>
       </mat-cell>
@@ -50,24 +63,20 @@
 
     <!-- Supression d'un todo -->
     <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let todo">
-          <button mat-mini-fab color="warn" (click)="delete(todo)">
-            <mat-icon aria-label="Delete task">
-              delete 
-            </mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let todo">
+        <button mat-mini-fab color="warn" (click)="delete(todo)">
+          <mat-icon aria-label="Delete task">
+            delete
+          </mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns">
-      </mat-header-row>
-      <mat-row *matRowDef="let row, columns: displayedColumns;">
-      </mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns">
+    </mat-header-row>
+    <mat-row *matRowDef="let row, columns: displayedColumns;">
+    </mat-row>
 
   </mat-table>
 </div>
-
-
-    
-
