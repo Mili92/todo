@@ -16,7 +16,7 @@
       [formControl]="columns" 
       multiple
       >
-        <mat-option *ngFor="let column of availableColumns" [value]="column.value"> {{column.label}} </mat-option>
+        <mat-option *ngFor="let column of helper.getOptionalColumns()" [value]="column.value"> {{column.title}} </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -33,25 +33,25 @@
 
     <!-- Titre -->
     <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef>To do</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{ helper.getColumn('title').title}}</mat-header-cell>
       <mat-cell *matCellDef="let todo"> {{ todo.title }} </mat-cell>
     </ng-container>
 
     <!-- Date de début -->
     <ng-container matColumnDef="begin">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>From...</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ helper.getColumn('begin').title}}</mat-header-cell>
       <mat-cell *matCellDef="let todo"> {{ todo.begin | date: 'dd-MM-yyyy' }} </mat-cell>
     </ng-container>
 
     <!-- Date de fin -->
     <ng-container matColumnDef="end">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>To...</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ helper.getColumn('end').title}}</mat-header-cell>
       <mat-cell *matCellDef="let todo"> {{ todo.end | date: 'dd-MM-yyyy' }} </mat-cell>
     </ng-container>
 
     <!-- Modification d'un todo -->
     <ng-container matColumnDef="update">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{ helper.getColumn('update').title}}</mat-header-cell>
       <mat-cell *matCellDef="let todo">
         <button mat-mini-fab color="accent" (click)="update(todo)">
           <mat-icon aria-label="Modify task">
@@ -63,7 +63,7 @@
 
     <!-- Supression d'un todo -->
     <ng-container matColumnDef="delete">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{ helper.getColumn('delete').title}}</mat-header-cell>
       <mat-cell *matCellDef="let todo">
         <button mat-mini-fab color="warn" (click)="delete(todo)">
           <mat-icon aria-label="Delete task">
@@ -73,9 +73,9 @@
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns">
+    <mat-header-row *matHeaderRowDef="helper.getDisplayedColumns()">
     </mat-header-row>
-    <mat-row *matRowDef="let row, columns: displayedColumns;">
+    <mat-row *matRowDef="let row, columns: helper.getDisplayedColumns();">
     </mat-row>
 
   </mat-table>

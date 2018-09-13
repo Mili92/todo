@@ -7,6 +7,9 @@ import { TodoInterface } from '../../shared/interfaces/todo-interface';
 import { MatTableDataSource, MatPaginator, MatSort, MatSelect, MatOption} from '@angular/material';
 import { FormGroup, FormControl } from '../../../../node_modules/@angular/forms';
 
+import { TodoHelper } from '../../shared/helpers/todo-helper';
+import { MatColumns } from '../../shared/interfaces/mat-columns';
+
 @Component({
   selector: 'todos-table',
   templateUrl: './todos-table.component.html',
@@ -36,28 +39,23 @@ export class TodosTableComponent implements OnInit {
    * Colonnes utilisées dans mat-table
    */
   public columns = new FormControl();
-  public displayedColumns: String[] = [
-    'title',
-    'begin',
-    'end',
-    'update',
-    'delete'
-  ];
+  
+  //Ici se trouvait le displayedColumns de todo-helper
 
   /**
    * Colonnes à afficher dans le mat-select
    */
-  public availableColumns: any[] = [
-    {value: 'begin',label: 'From...'},
-    {value: 'end', label: 'To...'}
-  ];
+  //public availableColumns: any[] = [
+  //  {value: 'begin',label: 'From...'},
+  //  {value: 'end', label: 'To...'}
+  //];
 
   /**
    * Colonnes sélectionnées par défaut pour que les boites soient cochées
    */
   public selectedValue: String[] = [
-    'begin',
-    'end'
+   // 'begin',
+  //  'end'
   ]
   /**
    * Options réellement sélectionnées par l'utilisateur
@@ -69,36 +67,44 @@ export class TodosTableComponent implements OnInit {
    * @param event Evenement
    */
   public changeView(event:any): void{
-    console.log(this.selectedOptions + ' de taille : '+ this.selectedOptions.length);
 
-    const toShow: String[] = this.selectedOptions;
+    this.helper.setDisplayedColumns(this.selectedOptions);
+  }
+    //console.log(this.selectedOptions + ' de taille : '+ this.selectedOptions.length);
+
+   // const toShow: String[] = this.selectedOptions;
 
     /**
      * Definit le tableau final pour l'affichage des colonnes
      */
-    const toDisplay: String[]= [];
+   // const toDisplay: String[]= [];
 
-    toDisplay.push('title'); //toujours affichée, donc...on le push
+   // toDisplay.push('title'); //toujours affichée, donc...on le push
 
-    if (toShow.indexOf('begin') !== -1){
+    //if (toShow.indexOf('begin') !== -1){
       //begin est coché, on le push
-      toDisplay.push('begin');
-    }
-    if (toShow.indexOf('end') !== -1){
+     // toDisplay.push('begin');
+    //}
+   // if (toShow.indexOf('end') !== -1){
       //end est coché, on le push
-      toDisplay.push('end');
-    }
+     // toDisplay.push('end');
+    //}
     //On doit toujours avoir les boutons aussi
-    toDisplay.push('update');
-    toDisplay.push('delete');
+    //toDisplay.push('update');
+    //toDisplay.push('delete');
     /**
      * On remplace le tableau des colonnes à afficher dans le tableau
      */
-    this.displayedColumns =toDisplay;
+    //this.displayedColumns = toDisplay;
 
-  }
+  //}
   
-  
+  /**
+   * Utilisation de label
+   */
+  //public getLabel(index:number): String {
+    //return this.availableColumns[index].label;
+ // }
 
   /**
    * Tableau de todos à afficher
@@ -106,8 +112,18 @@ export class TodosTableComponent implements OnInit {
    */
   public todos: TodoInterface[];
 
+  /**
+   * Instance de la classe TodoHelper
+   */
+  public helper: TodoHelper;
+
+
   constructor(private todoService: TodoService) { 
     this.todos=[]; //définit le tableau de todos à afficher
+
+    //Instancie le helper
+    this.helper = new TodoHelper();
+    this.selectedValue = this.helper.optionalColumnsToArray();
 
     this.todoSubscription = this.todoService.getTodo()
                                             .subscribe((todo) => {
