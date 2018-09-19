@@ -10,7 +10,7 @@ Instalar cliente Angular $: cd [yourdevspace] $: git clone https://github.com/pa
 
 Then go to http://localhost:4200/
 
-That's all falks!!!!
+That's all folks!!!!
 
 Install NodeJS $ npm i nodejs --save // Y como se haga la movida...te lo buscas machote.
 
